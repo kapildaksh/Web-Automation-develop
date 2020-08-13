@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+
+	<listeners>
+		<listener class-name="com.prenetics.listeners.CustomReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
+
+	<!-- FF : Firefox, IE : Internet Explorer, CH : Chrome -->
+	<parameter name="browser" value="${browser}"></parameter>
+
+	<!-- remote or local -->
+	<parameter name="execution" value="${execution}"></parameter>
+
+	<test name="Regression Testing">
+		<classes>
+			<class name="com.prenetics.testscript.CucumberTestRunner"></class>
+		</classes>
+	</test>
+
+
+
+</suite> <!-- Suite -->

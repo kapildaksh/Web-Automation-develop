@@ -1,0 +1,2 @@
+export SWAGGERHUB_APIKEY=eyJUb2tlblR5cGUiOiJBUEkiLCJzYWx0IjoiNGY5MGY0YjItMWI3Mi00OWFlLWEwMjctMTc4YWVmYTFiYTcyIiwiYWxnIjoiSFM1MTIifQ.eyJqdGkiOiJlYmRmNzJlNi03YTM3LTQ0NDctYmJmYi01NTNhMDAyYjkzYTAiLCJpYXQiOjE1MzA0NjUwNDl9.4pOOWrREh0Gx0e-RRD_y54rk4BRblaZLneGuwrnoJrVJpcJswgJAIHrThmxjKb9bLJaq4kLZ0LnjfDtyr2LuZg
+cd swagger/swagger-client-aggregator && mvn clean generate-sources && cd target/generated && mvn install -Dmaven.javadoc.skip=true -Dmaven.test.skip=true && cd ../../../../

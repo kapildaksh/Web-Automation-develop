@@ -1,0 +1,1093 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Testing Service API
+  contact:
+    email: devops@prenetics.com
+tags:
+  - name: Challenge
+    description: 'APIs for challenge'
+  - name: Lab
+    description: 'APIs for lab'
+  - name: Workflow
+    description: 'APIs for lab workflow'
+  - name: Customer
+    description: 'APIs for customer'
+  - name: Food
+    description: 'APIs for Food'
+  - name: Steps
+    description: 'APIs for Steps'
+  - name: Sleeps
+    description: 'APIs for Sleeps'
+  - name: Weights
+    description: 'APIs for Weights'
+  - name: Consultation
+    description: 'APIs for Consultation'
+paths:
+  /v1.0/sleep_log:
+    post:
+      tags:
+      - Sleeps
+      summary: 'Add sleep logs'
+      description: 'Add sleep logs'
+      operationId: 'addAllSleeps'
+      consumes: 
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: 'sleep list'
+        required: true
+        schema:
+          $ref: '#/definitions/sleep_list'
+      responses:
+        201:
+          description: 'sleep logs added'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+    delete:
+      tags:
+      - Sleeps
+      summary: 'Delete all sleep logs'
+      description: 'Delete sleep logs'
+      operationId: 'deleteSleeps'
+      consumes: 
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: 'service account'
+        required: true
+        schema:
+          $ref: '#/definitions/sleep_reset'
+      responses:
+        201:
+          description: 'sleep logs removed'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request, response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/step_log:
+    delete:
+      tags:
+      - Steps
+      summary: 'Delete all step logs'
+      description: 'Delete step logs'
+      operationId: 'deleteSteps'
+      consumes: 
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: 'service account'
+        required: true
+        schema:
+          $ref: '#/definitions/step_reset'
+      responses:
+        201:
+          description: 'step logs removed'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request, response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/weight_log:
+    delete:
+      tags:
+      - Weights
+      summary: 'Delete all weight logs'
+      description: 'Delete weight logs'
+      operationId: 'deleteWeights'
+      consumes: 
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: 'service account'
+        required: true
+        schema:
+          $ref: '#/definitions/weight_reset'
+      responses:
+        201:
+          description: 'step logs removed'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request, response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/food_log/{food_log_id}:
+    patch:
+      tags:
+      - Food
+      summary: 'Update a food log'
+      description: 'Update a food log'
+      operationId: 'updateFood'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: food_log_id
+        description: Food Log Id
+        required: true
+        type : integer
+      - in: body
+        name: body
+        description: 'food log'
+        required: true
+        schema:
+          $ref: '#/definitions/food'
+      responses:
+        204:
+          description: 'food log updated'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/food_log:
+    post:
+      tags:
+      - Food
+      summary: 'Add food logs'
+      description: 'Add food logs'
+      operationId: 'addAllFoods'
+      consumes: 
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: 'food list'
+        required: true
+        schema:
+          $ref: '#/definitions/food_list'
+      responses:
+        201:
+          description: 'food logs added'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+    delete:
+      tags:
+      - Food
+      summary: 'Delete all food logs'
+      description: 'Delete food logs'
+      operationId: 'deleteFoods'
+      consumes: 
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: 'service account'
+        required: true
+        schema:
+          $ref: '#/definitions/food_reset'
+      responses:
+        201:
+          description: 'food logs removed'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/challenge/serviceaccount/{serviceaccount}/type/{type}:
+    get:
+      tags:
+      - Challenge
+      summary: 'Get a challenge'
+      description: 'Get a challenge'
+      operationId: 'getChallenge'
+      produces:
+      - application/json
+      parameters:
+      - name: serviceaccount
+        in: 'path'
+        description: 'Service account'
+        required: true
+        type: 'string'
+      - name: type
+        in: 'path'
+        description: 'challenge type'
+        required: true
+        type: 'string'
+        enum: 
+          - steps_challenge
+          - meals_challenge
+          - sleeps_challenge
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/challenge'
+          description: 'Challenge'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/challenge/serviceaccount/{serviceaccount}:
+    get:
+      tags:
+      - Challenge
+      summary: 'Get all challenges'
+      description: 'Get all challenges'
+      operationId: 'getChallenges'
+      produces:
+      - application/json
+      parameters:
+      - name: serviceaccount
+        in: 'path'
+        description: 'Service account'
+        required: true
+        type: 'string'
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/challenge_list'
+          description: 'Challenges'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/challenge/account/{account}:
+    patch:
+      tags:
+      - Challenge
+      summary: 'Update challenge'
+      description: 'Update challenge'
+      operationId: 'updateChallenge'
+      consumes: 
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: account
+        in: 'path'
+        description: 'account/email'
+        required: true
+        type: 'string'
+      - in: body
+        name: body
+        description: 'challenge list'
+        required: true
+        schema:
+          $ref: '#/definitions/challenge_list'
+      responses:
+        204:
+          description: 'updated challenges'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/customer/account/{account}/track_kit:
+    put:
+      tags:
+      - Lab
+      summary: 'Update kit status'
+      description: 'Update kit status'
+      operationId: 'updateKitStatus'
+      consumes: 
+      - application/json
+      parameters:
+      - in: path
+        name: account
+        description: 'account'
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: 'kit status'
+        required: true
+        schema:
+          $ref: '#/definitions/track_kit_request'
+      responses:
+        204:
+          description: 'kit status updated'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+    patch:
+      tags:
+      - Lab
+      summary: 'Update kit status (product)'
+      description: 'Update kit status (product)'
+      operationId: 'updateProductKitStatus'
+      consumes: 
+      - application/json
+      parameters:
+      - in: path
+        name: account
+        description: 'account'
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: 'kit status'
+        required: true
+        schema:
+          $ref: '#/definitions/track_kits_request'
+      responses:
+        204:
+          description: 'kit status updated'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/customer/serviceaccount/{serviceaccount}/track_kit:
+    put:
+      tags:
+      - Lab
+      summary: 'Update kit status'
+      description: 'Update kit status'
+      operationId: 'updateKitStatusServiceAccount'
+      consumes: 
+      - application/json
+      parameters:
+      - in: path
+        name: serviceaccount
+        description: 'service account'
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: 'kit status'
+        required: true
+        schema:
+          $ref: '#/definitions/track_kit_request'
+      responses:
+        204:
+          description: 'kit status updated'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request, response message shows error details'
+        500:
+          description: 'Internal server error'
+    patch:
+      tags:
+      - Lab
+      summary: 'Update kit status (product)'
+      description: 'Update kit status (product)'
+      operationId: 'updateProductKitStatusServiceAccount'
+      consumes: 
+      - application/json
+      parameters:
+      - in: path
+        name: serviceaccount
+        description: 'service account'
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: 'kit status'
+        required: true
+        schema:
+          $ref: '#/definitions/track_kits_request'
+      responses:
+        204:
+          description: 'kit status updated'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request, response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/customer/account/{account}/consultation:
+    patch:
+      tags:
+      - Consultation
+      summary: 'Update consultation'
+      description: 'Update consultation'
+      operationId: 'updateConsultation'
+      consumes: 
+      - application/json
+      parameters:
+      - in: path
+        name: account
+        description: 'account'
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: 'consultation'
+        required: true
+        schema:
+          $ref: '#/definitions/consultation_request'
+      responses:
+        204:
+          description: 'consultation updated'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request, response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/barcode/provider/{provider}:
+    post:
+      tags:
+      - Lab
+      summary: 'Generate a new kit barcode'
+      description: 'Generate a new kit barcode'
+      operationId: 'createBarcode'
+      produces: 
+      - application/json
+      parameters:
+      - in: path
+        name: provider
+        description: 'Kit provider'
+        required: true
+        type: string
+      responses:
+        201:
+          schema:
+            $ref: '#/definitions/barcode_model'
+          description: 'kit barcode created'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+    get:
+      tags:
+      - Lab
+      summary: 'Get an available kit barcode'
+      description: 'Get an available kit barcode'
+      operationId: 'getBarcode'
+      produces: 
+      - application/json
+      parameters:
+      - in: path
+        name: provider
+        description: 'Kit provider'
+        required: true
+        type: string
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/barcode_model'
+          description: 'kit barcode created'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/lab/workflow/available_states:
+    get:
+      tags:
+      - Workflow
+      summary: 'Get lab workflow states'
+      description: 'Get lab workflow states'
+      operationId: 'getLabWorkflowStates'
+      produces:
+        - application/json
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/lab_workflow_states'
+          description: 'All lab workflow states'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/lab/workflow/customer/{customer_id}/reset:
+    delete:
+      tags:
+      - Workflow
+      summary: 'Reset customer lab workflow state'
+      description: 'Reset customer lab workflow state'
+      operationId: 'resetLabWorkflow'
+      consumes: 
+        - application/json
+      parameters:
+        - in: path
+          name: customer_id
+          description: 'customer_id'
+          required: true
+          type: number
+      responses:
+        204:
+          description: 'Customer lab workflow state reset'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/lab/workflow/customer/{customer_id}/retry:
+    delete:
+      tags:
+      - Workflow
+      summary: 'Remove pending tasks'
+      description: 'Remove pending tasks'
+      operationId: 'retryLastLabWorkflow'
+      consumes: 
+        - application/json
+      parameters:
+        - in: path
+          name: customer_id
+          description: 'customer_id'
+          required: true
+          type: number
+      responses:
+        204:
+          description: 'Pending tasks removed'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/lab/workflow/kit/{barcode}/sample:
+    post:
+      tags:
+      - Workflow
+      summary: 'Create sample'
+      description: 'Create sample'
+      operationId: 'createSample'
+      consumes: 
+        - application/json
+      parameters:
+        - in: path
+          name: barcode
+          description: 'barcode'
+          required: true
+          type: string
+      responses:
+        201:
+          schema:
+            $ref: '#/definitions/primary_sample'
+          description: 'Sample created'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/lab/workflow/kit/{barcode}/sample/{sample}/print:
+    put:
+      tags:
+      - Workflow
+      summary: 'Mark sample details printed'
+      description: 'Mark sample details printed'
+      operationId: 'printSample'
+      consumes: 
+        - application/json
+      parameters:
+        - in: path
+          name: barcode
+          description: 'barcode'
+          required: true
+          type: string
+        - in: path
+          name: sample
+          description: 'sample'
+          required: true
+          type: string
+      responses:
+        204:
+          description: 'Sample marked'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/lab/workflow/kit/{barcode}/sample/{sample}/extraction:
+    post:
+      tags:
+      - Workflow
+      summary: 'Extract sample'
+      description: 'Extract sample'
+      operationId: 'extractSample'
+      consumes: 
+        - application/json
+      parameters:
+        - in: path
+          name: barcode
+          description: 'barcode'
+          required: true
+          type: string
+        - in: path
+          name: sample
+          description: 'sample'
+          required: true
+          type: string
+      responses:
+        201:
+          schema:
+            $ref: '#/definitions/extracted_sample'
+          description: 'Sample extracted'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/lab/workflow/sample/{sample}/result:
+    post:
+      tags:
+      - Workflow
+      summary: 'Upload test result'
+      description: 'Upload test result'
+      operationId: 'uploadResult'
+      consumes: 
+        - application/json
+      parameters:
+        - in: path
+          name: sample
+          description: 'sample'
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: 'kit status'
+          required: true
+          schema:
+            $ref: '#/definitions/upload_request'
+      responses:
+        201:
+          schema:
+            $ref: '#/definitions/file_upload'
+          description: 'Result uploaded'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/lab/workflow/test_data:
+    post:
+      tags:
+      - Workflow
+      summary: 'Create test data up to genotype upload'
+      description: 'Create test data up to genotype upload'
+      operationId: 'createTestData'
+      consumes: 
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: 'body'
+          required: true
+          schema:
+            $ref: '#/definitions/test_request'
+      responses:
+        201:
+          schema:
+            $ref: '#/definitions/samples'
+          description: 'Sample extracted'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/customer/account/{account}:
+    delete:
+      tags:
+      - Customer
+      summary: 'Delete a customer'
+      description: 'Delete a customer'
+      operationId: 'deleteCustomer'
+      consumes: 
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: account
+        description: 'account'
+        required: true
+        type: string
+      responses:
+        204:
+          description: 'customer deleted'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+  /v1.0/customer/available_account:
+    get:
+      tags:
+      - Customer
+      summary: 'Get an available account name'
+      description: 'Get an available account name'
+      operationId: 'getAvailableAccount'
+      produces:
+      - application/json
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/account_model'
+          description: 'available account'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'  
+  /v1.0/challenge_reset:
+    post:
+      tags:
+      - Challenge
+      summary: 'Reset challenge'
+      description: 'Reset challenge'
+      operationId: 'resetChallenge'
+      consumes: 
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: 'service account detail'
+        required: true
+        schema:
+          $ref: '#/definitions/challenge_reset'
+      responses:
+        204:
+          description: 'challenges reset'
+        400:
+          schema:
+            $ref: '#/definitions/error_response'
+          description: 'Bad request,  response message shows error details'
+        500:
+          description: 'Internal server error'
+definitions:
+  upload_request:
+    type: object
+    properties:
+      file:
+        type: string
+        example: 'hfhdjsfhw8739384hsdihf'
+        description: 'base 64 encoding of a manual GSA file'
+  file_upload:
+    type: object
+    properties:
+      task_id:
+        type: integer
+  test_request:
+    type: object
+    properties:
+      kit:
+        type: integer
+        minimum: 1
+      product:
+        type: string
+      provider:
+        type: string
+  samples:
+    type: array
+    items:
+      type: string
+  primary_sample:
+    type: object
+    properties:
+      box:
+        type: string
+      bag:
+        type: string
+      identifier:
+        type: string
+      location:
+        type: string
+      kit:
+        type: string
+      type:
+        type: string
+  extracted_sample:
+    type: object
+    properties:
+      box:
+        type: string
+      box_id:
+        type: string
+      sample_id:
+        type: string
+      identifier:
+        type: string
+      location:
+        type: string
+  lab_workflow_state:
+    type: object
+    properties:
+      name:
+        type: string
+      fields:
+        type: array
+        items:
+          type: string
+  lab_workflow_states: 
+    type: array
+    items:
+      $ref: '#/definitions/lab_workflow_state'
+    xml:
+      name: lab_workflow_states
+  account_model:
+    type: object
+    properties:
+      account:
+        type: string
+    xml:
+      name: account_model
+  barcode_model:
+    type: object
+    properties:
+      code:
+        type: string
+    xml:
+      name: barcode_model
+  weight_reset:
+    type: object
+    properties:
+      serviceAccount:
+        type: string
+    xml:
+      name: weight_reset
+  sleep_reset:
+    type: object
+    properties:
+      serviceAccount:
+        type: string
+    xml:
+      name: sleep_reset
+  step_reset:
+    type: object
+    properties:
+      serviceAccount:
+        type: string
+    xml:
+      name: step_reset
+  food_reset:
+    type: object
+    properties:
+      serviceAccount:
+        type: string
+    xml:
+      name: food_reset
+  food:
+    type: object
+    properties:
+      serviceAccount:
+        type: string
+      imageDescription:
+        type: string
+      image_url:
+        type: string
+      rate:
+        type: integer
+      created_at:
+        type: string
+        example: '2018-02-20T20:00:00+08:00'
+        description: 'YYYY-MM-DDTHH:mm:ssZ'
+      calories:
+        type: integer
+    xml:
+      name: food
+  food_list:
+    type: object
+    properties:
+      food_log_list:
+        type: array
+        items:
+          $ref: '#/definitions/food'
+    xml:
+      name: food_list
+  sleep:
+    type: object
+    properties:
+      serviceAccount:
+        type: string
+      logDateLocal:
+        type: string
+        example: '2018-02-20T20:00:00+08:00'
+        description: 'YYYY-MM-DDTHH:mm:ssZ'
+      sleepTimeUtc:
+        type: string
+        example: '2018-02-20T20:00:00+08:00'
+        description: 'YYYY-MM-DDTHH:mm:ssZ'
+      wakeTimeUtc:
+        type: string
+        example: '2018-02-20T20:00:00+08:00'
+        description: 'YYYY-MM-DDTHH:mm:ssZ'
+      minute:
+        type: integer
+    xml:
+      name: sleep
+  sleep_list:
+    type: object
+    properties:
+      sleep_log_list:
+        type: array
+        items:
+          $ref: '#/definitions/sleep'
+    xml:
+      name: food_list
+  track_kit_request:
+    type: object
+    properties:
+      track_kit:
+        $ref: '#/definitions/track_kit'
+    xml:
+      name: track_kit_request
+  track_kits_request:
+    type: object
+    properties:
+      track_kit:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/track_kit'
+    xml:
+      name: track_kits_request  
+  track_kit:
+    type: object
+    properties:
+      registered:
+        type: string
+        example: '2017-04-01T15:34:41+08:00'
+        description: 'YYYY-MM-DDTHH:mm:ssZ'
+      sample_in_lab:
+        type: string
+        example: '2017-04-02T15:34:41+08:00'
+        description: 'YYYY-MM-DDTHH:mm:ssZ'
+      sample_processing:
+        type: string
+        example: '2017-04-03T15:34:41+08:00'
+        description: 'YYYY-MM-DDTHH:mm:ssZ'
+      report_complete:
+        type: string
+        example: '2017-04-04T15:34:41+08:00'
+        description: 'YYYY-MM-DDTHH:mm:ssZ'
+    xml:
+      name: track_kit  
+  consultation_request:
+    type: object
+    properties:
+      consultation:
+        $ref: '#/definitions/consultation'
+    xml:
+      name: consultation_request  
+  consultation:
+    type: object
+    properties:
+      status:
+        type: string
+        enum: [STOP, HOLD, DONE, MISS]
+        description: >
+          booking status:
+            * `HOLD` - RESERVED, booking made
+            * `STOP` - CANCELLED, booking cancelled
+            * `DONE` - DONE, consultation finished
+            * `MISS` - MISSED, consultation is missed, should re-schedule again
+    xml:
+      name: consultation  
+  challenge_reset:
+    type: object
+    properties:
+      serviceAccount:
+        type: string
+    xml:
+      name: challenge_reset
+  challenge:
+    type: object
+    properties:
+      h_account: 
+        type: string
+      challengeType:
+        type: string
+        enum: 
+          - steps_challenge
+          - meals_challenge
+          - sleeps_challenge
+      completedDays:
+        type: integer
+      totalDays:
+        type: integer
+      startDateUtc:
+        type: string
+        example: '2018-02-20T20:00:00+08:00'
+        description: 'YYYY-MM-DDTHH:mm:ssZ'
+      isActive:
+        type: boolean
+      isEnded:
+        type: boolean
+      isManualTrigger:
+        type: boolean
+      hasSuccessNotified:
+        type: boolean
+      hasFailNotified:
+        type: boolean
+      hasStartNotified:
+        type: boolean
+      order:
+        type: integer
+    xml:
+      name: challenge
+  challenge_list:
+    type: object
+    properties:
+      challenge_list:
+        type: array
+        items:
+          $ref: '#/definitions/challenge'
+    xml:
+      name: challenge_list
+  error_response:
+    type: object
+    properties:
+      error_code:
+        type: integer
+        format: int32
+      error_message:
+        type: string
+    xml:
+      name: error_response
+schemes:
+ - https
+# Added by API Auto Mocking Plugin
+basePath: /PreneticsPlatform/genie-public-api-gateway/1.0.0
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
